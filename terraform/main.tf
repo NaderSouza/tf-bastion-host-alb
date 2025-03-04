@@ -4,6 +4,7 @@ resource "aws_vpc" "main" {
   instance_tenancy = "default"
   tags             = { Name = "PrivateBastionVPC" }
 }
+
 # INTERNET GATEWAY
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
