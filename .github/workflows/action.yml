@@ -3,10 +3,10 @@ name: Terraform Deploy
 on:
   push:
     branches:
-      - main # Executar sempre que houver um push na branch 'main'
+      - main
   pull_request:
     branches:
-      - main # Executar em PRs para 'main'
+      - main
 
 jobs:
   terraform:
@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: 🔄 Checkout do repositório
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 📂 Listar arquivos para debug
+        run: ls -la
 
       - name: ☁️ Configurar Credenciais da AWS
         uses: aws-actions/configure-aws-credentials@v1
@@ -27,16 +32,22 @@ jobs:
       - name: ⚙️ Instalar Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.7 # Versão do Terraform
+          terraform_version: 1.5.7
+
+      - name: 📂 Entrar no diretório Terraform
+        run: cd terraform && ls -la
 
       - name: 🔄 Inicializar Terraform
-        run: terraform init\
-
-      - name: 📂 Listar arquivos no diretório
-        run: ls -la
+        run: |
+          cd terraform
+          terraform init
 
       - name: 🔍 Verificar Terraform Plan
-        run: terraform plan -out=tfplan
+        run: |
+          cd terraform
+          terraform plan -out=tfplan
 
       - name: 🚀 Aplicar Terraform
-        run: terraform apply -auto-approve tfplan
+        run: |
+          cd terraform
+          terraform apply -auto-approve tfplan
