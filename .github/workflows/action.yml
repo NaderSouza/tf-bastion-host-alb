@@ -30,7 +30,10 @@ jobs:
           terraform_version: 1.5.7 # Versão do Terraform
 
       - name: 🔄 Inicializar Terraform
-        run: terraform init
+        run: terraform init\
+
+      - name: 📂 Listar arquivos no diretório
+        run: ls -la
 
       - name: 🔍 Verificar Terraform Plan
         run: terraform plan -out=tfplan
