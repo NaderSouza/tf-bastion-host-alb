@@ -57,41 +57,41 @@ resource "aws_kms_alias" "a" {
 }
 
 #KMS KEY WEST-2
-resource "aws_kms_key" "mykmskey-west" {
-  description             = "KMS Key for RDS in west-2 region"
-  deletion_window_in_days = 8
-  multi_region            = true
-  provider                = aws.replica
-  tags = {
-    Name = "mykmskey-west"
-  }
+# resource "aws_kms_key" "mykmskey-west" {
+#   description             = "KMS Key for RDS in west-2 region"
+#   deletion_window_in_days = 8
+#   multi_region            = true
+#   provider                = aws.replica
+#   tags = {
+#     Name = "mykmskey-west"
+#   }
 
-}
+# }
 
 
 #DB REPLICA
-resource "aws_db_instance" "replica" {
-  replicate_source_db          = aws_db_instance.rds_primary_instance.identifier
-  instance_class               = "db.t3.medium"
-  skip_final_snapshot          = true
-  vpc_security_group_ids       = [aws_security_group.db.id]
-  backup_retention_period      = 7
-  backup_window                = "03:00-04:00"
-  maintenance_window           = "Mon:04:00-Mon:04:30"
-  performance_insights_enabled = true
-  multi_az                     = true
-  storage_encrypted            = true
-  kms_key_id                   = aws_kms_key.mykmskey.arn
+# resource "aws_db_instance" "replica" {
+#   replicate_source_db          = aws_db_instance.rds_primary_instance.identifier
+#   instance_class               = "db.t3.medium"
+#   skip_final_snapshot          = true
+#   vpc_security_group_ids       = [aws_security_group.db.id]
+#   backup_retention_period      = 7
+#   backup_window                = "03:00-04:00"
+#   maintenance_window           = "Mon:04:00-Mon:04:30"
+#   performance_insights_enabled = true
+#   multi_az                     = true
+#   storage_encrypted            = true
+#   kms_key_id                   = aws_kms_key.mykmskey.arn
 
-  tags = {
-    Name = "DB Replica"
-  }
-}
+#   tags = {
+#     Name = "DB Replica"
+#   }
+# }
 
 #DB BACKUP WEST-2
-resource "aws_db_instance_automated_backups_replication" "default" {
-  source_db_instance_arn = aws_db_instance.rds_primary_instance.arn
-  kms_key_id             = aws_kms_key.mykmskey-west.arn
-  retention_period       = 8
-  provider               = aws.replica
-}
+# resource "aws_db_instance_automated_backups_replication" "default" {
+#   source_db_instance_arn = aws_db_instance.rds_primary_instance.arn
+#   kms_key_id             = aws_kms_key.mykmskey-west.arn
+#   retention_period       = 8
+#   provider               = aws.replica
+# }

@@ -25,6 +25,12 @@ variable "ssh" {
 
 }
 
+variable "http" {
+  description = "Setup http/s port"
+  type        = list(any)
+
+}
+
 variable "web_port" {
   description = "LoadBalancer web connection"
   type        = any
@@ -35,3 +41,13 @@ variable "all" {
   description = "SSH"
   type        = any
 }
+
+# variable "key_name" {
+#   description = "Nome da chave SSH para acessar a instância"
+#   type        = string
+# }
+
+
+
+
+

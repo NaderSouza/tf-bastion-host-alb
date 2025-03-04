@@ -1,5 +1,17 @@
-output "vpc_id" {
-  value = aws_vpc.main.id
+output "bastion_subnet_id" {
+  value = aws_subnet.bastion.id
+}
+
+output "web_subnet_id" {
+  value = aws_subnet.web.id
+}
+
+output "db_subnet1_id" {
+  value = aws_subnet.db.id
+}
+
+output "db_subnet2_id" {
+  value = aws_subnet.db2.id
 }
 
 output "bastion_sg_id" {
